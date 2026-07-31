@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Icons">
+        <file>Android.jpg</file>
+        <file>Linux.jpg</file>
+        <file>MacOSX.jpg</file>
+        <file>Windows.jpg</file>
+    </qresource>
+</RCC>

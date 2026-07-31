@@ -1,5 +1,0 @@
-#include "amplifTF.h"
-
-amplifTF::amplifTF() {
-
-}

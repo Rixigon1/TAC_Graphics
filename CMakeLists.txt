@@ -25,19 +25,19 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TAC_Graphics
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        transferFunction.h transferFunction.cpp
-        difEq.h difEq.cpp
-        amplifTF.h
-        integrTF.h integrTF.cpp
-        difftTF.h diffTF.cpp
 
-        amplifTF.cpp
-        aperTF.h aperTF.cpp
-        firstOrderForcingTF.h firstOrderForcingTF.cpp
-        oscTF.h oscTF.cpp
-        secondOrderForcingTF.h secondOrderForcingTF.cpp
         systemGraph.h systemGraph.cpp
         elemUnits.h elemUnits.cpp
+        editTab.h editTab.cpp
+        mainWindow.h mainWindow.cpp
+        resources.qrc
+        canvasPage.h canvasPage.cpp
+        welcomePage.h welcomePage.cpp
+        preferencesPage.h preferencesPage.cpp
+        solverPage.h solverPage.cpp
+
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TAC_Graphics APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
