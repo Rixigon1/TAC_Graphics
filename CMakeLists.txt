@@ -28,13 +28,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         systemGraph.h systemGraph.cpp
         elemUnits.h elemUnits.cpp
-        editTab.h editTab.cpp
         mainWindow.h mainWindow.cpp
         resources.qrc
         canvasPage.h canvasPage.cpp
         welcomePage.h welcomePage.cpp
         preferencesPage.h preferencesPage.cpp
         solverPage.h solverPage.cpp
+        sessionButton.h sessionButton.cpp
+        projectsButton.h projectsButton.cpp
+        canvasView.h canvasView.cpp
+
 
 
 

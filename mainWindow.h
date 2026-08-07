@@ -16,6 +16,7 @@
 #include <QSignalMapper>
 #include <QPalette>
 #include <QStatusBar>
+#include <QFile>
 
 #include "welcomePage.h"
 #include "canvasPage.h"
@@ -28,6 +29,16 @@ class mainWindow : public QWidget {
         bool fileOpened = false;
         bool canvasActiveFocus = false;
         QStringList openedFiles;
+        QString lang = "_ru";
+        QStringList elemUnits_names;
+        QString elemUnits_path = "iniFiles/";
+        QString elemUnits_fileName = "elemUnitsNames";
+
+        // Сделать считывание из файла
+
+
+        // Путь к сохраненным файлам переместить в настройки QSettings
+
 
         QSignalMapper* sMapper = new QSignalMapper(this);
         QGridLayout* gLay = new QGridLayout;
@@ -38,6 +49,8 @@ class mainWindow : public QWidget {
 
     public:
         mainWindow(QWidget *parent = nullptr);
+
+        const QStringList getElemUnits_names();
 
     signals:
 

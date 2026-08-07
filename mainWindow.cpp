@@ -1,12 +1,29 @@
 #include "mainWindow.h"
 
-#include <QDebug>
-
 
 mainWindow::mainWindow(QWidget *parent) : QWidget{parent} {
 
     setObjectName("mainWindow");
     setMinimumSize(1000, 600);
+
+    {
+        QFile file(elemUnits_path + elemUnits_fileName + lang + ".txt");
+        if(!file.open(QFile::ReadOnly | QIODevice::Text)) {
+            // Сообщение об ошибке
+            qDebug() << "ERROR";
+        }
+        else {
+            QTextStream stream(&file);
+            stream.setEncoding(QStringConverter::Utf8);
+
+            elemUnits_names = stream.readAll().split("\n");
+
+            file.close();
+        }
+
+    }
+
+
 
     gLay->setSpacing(0);
     gLay->setContentsMargins(0, 0, 0, 1);
@@ -115,20 +132,20 @@ mainWindow::mainWindow(QWidget *parent) : QWidget{parent} {
 
     connect(sMapper, SIGNAL(mappedInt(int)), this, SLOT(setActivePage(int)));
 
-    welcomePage* wPage = new welcomePage;
-    canvasPage* cPage = new canvasPage;
-    solverPage* sPage = new solverPage;
-    preferencesPage* pPage = new preferencesPage;
+    welcomePage* wPage = new welcomePage();
+    canvasPage* cPage = new canvasPage(this);
+    solverPage* sPage = new solverPage();
+    preferencesPage* pPage = new preferencesPage();
 
     // Мера для тестирования
-    i = 40;
-    for(QWidget* wgt : {(QWidget*)wPage, (QWidget*)cPage, (QWidget*)sPage, (QWidget*)pPage}) {
-        QPalette pal = wgt->palette();
-        pal.setColor(QPalette::Window, QColor(i, i, i));
-        wgt->setPalette(pal);
-        wgt->setAutoFillBackground(true);
-        i += 40;
-    }
+    // i = 40;
+    // for(QWidget* wgt : {(QWidget*)wPage, (QWidget*)cPage, (QWidget*)sPage, (QWidget*)pPage}) {
+    //     QPalette pal = wgt->palette();
+    //     pal.setColor(QPalette::Window, QColor(i, i-10, i-20));
+    //     wgt->setPalette(pal);
+    //     wgt->setAutoFillBackground(true);
+    //     i += 50;
+    // }
 
     pages->insertWidget(0, wPage);
     pages->insertWidget(1, cPage);
@@ -275,6 +292,9 @@ mainWindow::mainWindow(QWidget *parent) : QWidget{parent} {
 
 }
 
+const QStringList mainWindow::getElemUnits_names() {
+    return elemUnits_names;
+}
 
 void mainWindow::notYetImplimend() {
     QMessageBox mes(this);
