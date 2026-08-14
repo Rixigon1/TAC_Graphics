@@ -66,6 +66,8 @@ void canvasView::mouseReleaseEvent(QMouseEvent* event) {
         unsetCursor();
         event->accept();
     }
+
+    QGraphicsView::mouseReleaseEvent(event);
 }
 
 void canvasView::wheelEvent(QWheelEvent* event) {

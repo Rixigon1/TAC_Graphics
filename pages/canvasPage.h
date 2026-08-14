@@ -10,7 +10,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 
-#include "canvasView.h"
+#include "../canvas/canvasView.h"
+#include "../items/gElemUnits.h"
 
 
 class mainWindow;

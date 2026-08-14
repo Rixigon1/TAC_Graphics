@@ -26,17 +26,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
 
-        systemGraph.h systemGraph.cpp
-        elemUnits.h elemUnits.cpp
+
+        canvas/canvasView.h canvas/canvasView.cpp
         mainWindow.h mainWindow.cpp
         resources.qrc
-        canvasPage.h canvasPage.cpp
-        welcomePage.h welcomePage.cpp
-        preferencesPage.h preferencesPage.cpp
-        solverPage.h solverPage.cpp
-        sessionButton.h sessionButton.cpp
-        projectsButton.h projectsButton.cpp
-        canvasView.h canvasView.cpp
+        pages/canvasPage.h pages/canvasPage.cpp
+        pages/welcomePage.h pages/welcomePage.cpp
+        pages/preferencesPage.h pages/preferencesPage.cpp
+        pages/solverPage.h pages/solverPage.cpp
+        items/elemUnitsNames_en.txt items/elemUnitsNames_ru.txt items/helpUnitsNames_ru.txt
+        items/gElemUnits.h items/gElemUnits.cpp
 
 
 

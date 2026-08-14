@@ -18,10 +18,10 @@
 #include <QStatusBar>
 #include <QFile>
 
-#include "welcomePage.h"
-#include "canvasPage.h"
-#include "solverPage.h"
-#include "preferencesPage.h"
+#include "pages/welcomePage.h"
+#include "pages/canvasPage.h"
+#include "pages/solverPage.h"
+#include "pages/preferencesPage.h"
 
 class mainWindow : public QWidget {
     Q_OBJECT
@@ -31,8 +31,10 @@ class mainWindow : public QWidget {
         QStringList openedFiles;
         QString lang = "_ru";
         QStringList elemUnits_names;
+        QStringList helpUnits_names;
         QString elemUnits_path = "iniFiles/";
         QString elemUnits_fileName = "elemUnitsNames";
+        QString helpUnits_fileName = "helpUnitsNames";
 
         // Сделать считывание из файла
 
@@ -51,6 +53,7 @@ class mainWindow : public QWidget {
         mainWindow(QWidget *parent = nullptr);
 
         const QStringList getElemUnits_names();
+        const QStringList getHelpUnits_names();
 
     signals:
 

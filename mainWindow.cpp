@@ -6,8 +6,11 @@ mainWindow::mainWindow(QWidget *parent) : QWidget{parent} {
     setObjectName("mainWindow");
     setMinimumSize(1000, 600);
 
+    // Сделать отдельный метод чтения инициализирующих файлов
+
     {
         QFile file(elemUnits_path + elemUnits_fileName + lang + ".txt");
+        // qDebug() << elemUnits_path + elemUnits_fileName + lang + ".txt";
         if(!file.open(QFile::ReadOnly | QIODevice::Text)) {
             // Сообщение об ошибке
             qDebug() << "ERROR";
@@ -23,7 +26,23 @@ mainWindow::mainWindow(QWidget *parent) : QWidget{parent} {
 
     }
 
+    {
+        QFile file(elemUnits_path + helpUnits_fileName + lang + ".txt");
+        // qDebug() << elemUnits_path + helpUnits_fileName + lang + ".txt";
+        if(!file.open(QFile::ReadOnly | QIODevice::Text)) {
+            // Сообщение об ошибке
+            qDebug() << "ERROR";
+        }
+        else {
+            QTextStream stream(&file);
+            stream.setEncoding(QStringConverter::Utf8);
 
+            helpUnits_names = stream.readAll().split("\n");
+
+            file.close();
+        }
+
+    }
 
     gLay->setSpacing(0);
     gLay->setContentsMargins(0, 0, 0, 1);
@@ -294,6 +313,10 @@ mainWindow::mainWindow(QWidget *parent) : QWidget{parent} {
 
 const QStringList mainWindow::getElemUnits_names() {
     return elemUnits_names;
+}
+
+const QStringList mainWindow::getHelpUnits_names() {
+    return helpUnits_names;
 }
 
 void mainWindow::notYetImplimend() {

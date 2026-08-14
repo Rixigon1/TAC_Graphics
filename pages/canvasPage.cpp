@@ -1,5 +1,5 @@
 #include "canvasPage.h"
-#include "mainWindow.h"
+#include "../mainWindow.h"
 
 canvasPage::canvasPage(mainWindow* mWin, QWidget* parent) : QWidget{parent} {
     setObjectName("canvasPage");
@@ -27,7 +27,8 @@ canvasPage::canvasPage(mainWindow* mWin, QWidget* parent) : QWidget{parent} {
     gLay->setSpacing(0);
     gLay->setContentsMargins(0, 0, 0, 1);
 
-    QStringList names = mWin->getElemUnits_names();
+    QStringList elemNames = mWin->getElemUnits_names();
+    QStringList helpNames = mWin->getHelpUnits_names(); // Сделать файл
 
     tree->setHeaderLabel(tr("Звенья"));
     tree->setDragDropMode(QAbstractItemView::DragOnly);
@@ -35,21 +36,37 @@ canvasPage::canvasPage(mainWindow* mWin, QWidget* parent) : QWidget{parent} {
     QTreeWidgetItem* elemItems = new QTreeWidgetItem;
     elemItems->setFlags(elemItems->flags() & ~Qt::ItemIsDragEnabled);
     elemItems->setText(0, tr("Элементарные звенья"));
-    for(int i = 0; i < names.length(); i++) {
+    for(int i = 0; i < elemNames.length(); i++) {
         QTreeWidgetItem* item = new QTreeWidgetItem;
-        item->setText(0, names.value(i));
+        item->setText(0, elemNames.value(i));
         // Сделать данные для распознавания что вставлять на холст после перетаскивания
         // item->setData(0, );
         elemItems->addChild(item);
     }
     tree->addTopLevelItem(elemItems);
 
+    // Сумматор и др элементы если есть
+    QTreeWidgetItem* helpItems = new QTreeWidgetItem;
+    helpItems->setFlags(elemItems->flags() & ~Qt::ItemIsDragEnabled);
+    helpItems->setText(0, tr("Элементы построения\nструктурной схемы"));
+    for(int i = 0; i < helpNames.length(); i++) {
+        QTreeWidgetItem* item = new QTreeWidgetItem;
+        item->setText(0, helpNames.value(i));
+        // Сделать данные для распознавания что вставлять на холст после перетаскивания
+        // item->setData(0, );
+        helpItems->addChild(item);
+    }
+    tree->addTopLevelItem(helpItems);
+
     // Сделать собственный класс сцены в котором будут определены дополнительные методы связанные с привязкой объектов к сетке
     view->gridOn();
 
     QPen pen(Qt::black);
     QBrush brush(Qt::white);
-    scene->addEllipse(QRectF(0, 0, 40, 40), pen, brush);
+    // scene->addEllipse(QRectF(0, 0, 40, 40), pen, brush);
+
+    transferFunction* tf = new transferFunction;
+    scene->addItem(tf);
 
 
     setStyleSheet(R"(
