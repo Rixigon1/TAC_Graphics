@@ -12,8 +12,8 @@ class connectionLine;
 
 class transferFunction : public QGraphicsItem {
     private:
-        connectionPort* in;
-        connectionPort* out;
+        connectionPort* inPort;
+        connectionPort* outPort;
 
     public:
         transferFunction();
@@ -30,7 +30,7 @@ class transferFunction : public QGraphicsItem {
 
 class connectionPort : public QGraphicsItem {
     private:
-
+        transferFunction* parentTF;
 
     public:
         connectionPort(QGraphicsItem* parent);
@@ -50,7 +50,8 @@ class connectionPort : public QGraphicsItem {
 
 class connectionLine : public QGraphicsItem {
 private:
-
+    connectionPort* startPort;
+    connectionPort* endPort;
 
 public:
     connectionLine(QGraphicsItem* parent);
