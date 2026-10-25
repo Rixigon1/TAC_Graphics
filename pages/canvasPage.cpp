@@ -8,9 +8,10 @@ canvasPage::canvasPage(mainWindow* mWin, QWidget* parent) : QWidget{parent} {
     gLay = new QGridLayout();
     tree = new QTreeWidget();
     // Сделать собственный класс сцены в котором будут определены дополнительные методы связанные с привязкой объектов к сетке
-    scene = new QGraphicsScene();
+    scene = new canvasScene();
     scene->setSceneRect(-40000, -40000, 80000, 80000);
     view = new canvasView(scene);
+
 
     spt->addWidget(tree);
     spt->addWidget(view);
@@ -65,8 +66,12 @@ canvasPage::canvasPage(mainWindow* mWin, QWidget* parent) : QWidget{parent} {
     QBrush brush(Qt::white);
     // scene->addEllipse(QRectF(0, 0, 40, 40), pen, brush);
 
-    transferFunction* tf = new transferFunction;
-    scene->addItem(tf);
+    transferFunction* tf1 = new transferFunction;
+    transferFunction* tf2 = new transferFunction;
+    transferFunction* tf3 = new transferFunction;
+    scene->addItem(tf1);
+    scene->addItem(tf2);
+    scene->addItem(tf3);
 
 
     setStyleSheet(R"(

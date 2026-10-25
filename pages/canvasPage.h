@@ -11,6 +11,7 @@
 #include <QGraphicsItem>
 
 #include "../canvas/canvasView.h"
+#include "../canvas/canvasScene.h"
 #include "../items/gElemUnits.h"
 
 
@@ -23,7 +24,7 @@ class canvasPage : public QWidget {
         QGridLayout* gLay;
         QTreeWidget* tree;
         QSplitter* spt;
-        QGraphicsScene* scene;
+        canvasScene* scene;
         canvasView* view;
         QList<QPoint>* gridPoints;
 

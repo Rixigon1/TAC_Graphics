@@ -36,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         pages/solverPage.h pages/solverPage.cpp
         items/elemUnitsNames_en.txt items/elemUnitsNames_ru.txt items/helpUnitsNames_ru.txt
         items/gElemUnits.h items/gElemUnits.cpp
+        canvas/canvasScene.h canvas/canvasScene.cpp
 
 
 

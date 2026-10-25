@@ -13,12 +13,16 @@ class canvasView : public QGraphicsView {
     Q_OBJECT
     private:
         bool isPanning = false;
+
         bool isGridOn = false;
         // Сделать чтение параметра из QSettings
         qreal step = 20;
         qreal zoom = 1.1;
 
-        QPointF lastMusePos;
+        qreal xLine;
+        qreal yLine;
+
+        QPointF lastMousePos;
 
 
     public:

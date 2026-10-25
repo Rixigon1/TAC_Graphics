@@ -5,6 +5,10 @@ canvasView::canvasView(QGraphicsScene* scene, QWidget* parent) : QGraphicsView(s
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setResizeAnchor(QGraphicsView::NoAnchor);
+    setMouseTracking(true);
+    viewport()->setMouseTracking(true);
+
+
 }
 
 
@@ -31,9 +35,9 @@ void canvasView::gridOff() {
 void canvasView::mousePressEvent(QMouseEvent* event) {
 
     // Сделать перемещение на среднюю кнопку мыши
-    if(event->button() == Qt::RightButton) {
+    if(event->button() == Qt::MiddleButton) {
         isPanning = true;
-        lastMusePos = event->pos();
+        lastMousePos = event->pos();
 
         setCursor(Qt::ClosedHandCursor);
 
@@ -46,8 +50,8 @@ void canvasView::mousePressEvent(QMouseEvent* event) {
 
 void canvasView::mouseMoveEvent(QMouseEvent* event) {
     if(isPanning) {
-        QPointF delta = event->pos() - lastMusePos;
-        lastMusePos = event->pos();
+        QPointF delta = event->pos() - lastMousePos;
+        lastMousePos = event->pos();
 
         verticalScrollBar()->setValue(verticalScrollBar()->value() - delta.y());
         horizontalScrollBar()->setValue(horizontalScrollBar()->value() - delta.x());
@@ -60,7 +64,7 @@ void canvasView::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void canvasView::mouseReleaseEvent(QMouseEvent* event) {
-    if(event->button() == Qt::RightButton) {
+    if(event->button() == Qt::MiddleButton) {
         isPanning = false;
 
         unsetCursor();
