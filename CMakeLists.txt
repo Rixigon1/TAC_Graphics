@@ -37,6 +37,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         items/elemUnitsNames_en.txt items/elemUnitsNames_ru.txt items/helpUnitsNames_ru.txt
         items/gElemUnits.h items/gElemUnits.cpp
         canvas/canvasScene.h canvas/canvasScene.cpp
+        models/tfModel.cpp models/tfModel.h
 
 
 
