@@ -1,17 +1,39 @@
 #include "gElemUnits.h"
 
-#include "../canvas/canvasScene.h"
 
 
-transferFunction::transferFunction() : QGraphicsItem() {
+// #include "../canvas/canvasScene.h"
+
+// Переделать так чтобы номера портов брались из модели
+transferFunction::transferFunction(int ID, tfModel* model) : QGraphicsItem() {
+    this->ID = ID;
     setZValue(3);
-    outPort = new connectionPort(this);
-    outPort->setPos(50, 0);
+    this->model = model;
 
-    inPort = new connectionPort(this);
-    inPort->setPos(-50, 0);
+    block logicTF = model->getBlock(ID);
+    int inPortCount = logicTF.inPorts.size();
+    int outPortCount = logicTF.outPorts.size();
+
+    for(int i = 1; i <= inPortCount; i++) {
+        inPort.push_back((new connectionPort(i, this)));
+        inPort[i-1]->setPos(this->boundingRect().left(), this->boundingRect().top() + this->boundingRect().height() * ((i*1.0)/(inPortCount+1)));
+    }
+    for(int i = inPortCount + 1; i <= inPortCount+outPortCount; i++) {
+        outPort.push_back((new connectionPort(i, this)));
+        outPort[i-inPortCount-1]->setPos(this->boundingRect().right(), this->boundingRect().top() + this->boundingRect().height() * (((i-inPortCount)*1.0)/(outPortCount+1)));
+    }
+
+    // outPort = new connectionPort(this);
+    // outPort->setPos(50, 0);
+
+    // inPort = new connectionPort(this);
+    // inPort->setPos(-50, 0);
 
     setFlags(ItemIsMovable | ItemIsSelectable);
+}
+
+tfModel* transferFunction::getModel() {
+    return model;
 }
 
 QRectF transferFunction::boundingRect() const {
@@ -27,8 +49,6 @@ void transferFunction::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
     painter->setBrush(brush);
     painter->drawRect(rectBorder);
     painter->drawText(rectBorder, Qt::AlignCenter, "Transfer function");
-
-
 }
 
 void transferFunction::mousePressEvent(QGraphicsSceneMouseEvent* event)
@@ -52,7 +72,9 @@ void transferFunction::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 //-----------------------------------------------------------------------------------------------------------------
 
 
-connectionPort::connectionPort(QGraphicsItem* parent) : QGraphicsItem(parent) {
+connectionPort::connectionPort(int ID, transferFunction* parent) : QGraphicsItem(parent) {
+    this->ID = ID;
+    this->parentTF = parent;
     setFlags(ItemIsSelectable);
     setFlag(ItemSendsScenePositionChanges);
     setZValue(2);
@@ -68,13 +90,15 @@ connectionLine* connectionPort::getLine() {
 }
 
 void connectionPort::deleteLine() {
-    connectionPort* startPort = line->getStartPort();
-    connectionPort* endPort = line->getEndPort();
-    connectionLine* delLine = line;
-    if(startPort) startPort->setLine(nullptr);
-    if(endPort) endPort->setLine(nullptr);
-    line = nullptr;
-    delete delLine;
+    if(parentTF->getModel()->deleteConnection(line->getID()) == 0) {
+        connectionPort* startPort = line->getStartPort();
+        connectionPort* endPort = line->getEndPort();
+        connectionLine* delLine = line;
+        if(startPort) startPort->setLine(nullptr);
+        if(endPort) endPort->setLine(nullptr);
+        line = nullptr;
+        delete delLine;
+    }
 }
 
 QRectF connectionPort::boundingRect() const {

@@ -11,8 +11,8 @@ struct block {
 
     QVector<int> inPorts;
     QVector<int> outPorts;
-    QHash<int, int> inConnectionsIDs; // portID, conID
-    QMultiHash<int, int> outConnectionsIDs; // portID, conID
+    QHash<int, int> inConnectionsIDs; // portID, connectionID
+    QMultiHash<int, int> outConnectionsIDs; // portID, connectionID
 };
 
 struct connection {
@@ -48,7 +48,11 @@ class tfModel : public QObject {
         void deleteBlock(int ID);
 
         int addConnection(int sourceBlockID, int targetBlockID, int sourcePortID, int targetPortID);
-        void deleteConnection(int ID);
+        int deleteConnection(int ID);
+
+        block getBlock(int ID);
+        connection getConnection(int ID);
+
 
         void clear();
 
@@ -72,6 +76,7 @@ class tfModel : public QObject {
         void noSuchPort(int blockID, int portID);
         void tooManyConnectionsForInPort(int blockID, int targetPortID);
         void selfBlockConnection(int blockID);
+        void deleteNotMakedConnection();
 };
 
 #endif // TFMODEL_H

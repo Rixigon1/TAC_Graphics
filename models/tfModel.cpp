@@ -91,14 +91,33 @@ int tfModel::addConnection(int sourceBlockID, int targetBlockID, int sourcePortI
     return newConnection.ID;
 }
 
-void tfModel::deleteConnection(int ID) {
+
+int tfModel::deleteConnection(int ID) {
+    if(!connections.contains(ID)) {
+        emit deleteNotMakedConnection();
+        return -1;
+    }
     auto connection = connections[ID];
     block& sourceBlock = blocks[connection.sourceBlockID];
     block& targetBlock = blocks[connection.targetBlockID];
     sourceBlock.outConnectionsIDs.remove(connection.sourcePortID, ID);
     targetBlock.inConnectionsIDs.remove(connection.targetPortID);
 
-    connections.remove(ID);
     emit connectionDeleted(ID);
+    return 0;
 }
+
+block tfModel::getBlock(int ID) {
+    return blocks[ID];
+}
+
+connection tfModel::getConnection(int ID) {
+    return connections[ID];
+}
+
+
+
+
+
+
 
